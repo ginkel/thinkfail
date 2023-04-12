@@ -4,7 +4,7 @@ A very tiny Python script to prove that Lenovo's P1 Gen 5 and X1 Extreme Edition
 
 ## Usage
 
-Start `thinkfail.py` and keep hitting ENTER at a constant rate. When the fan's state changes, notice that multiple keystrokes are lost.
+Start `thinkfail.py` and keep hitting ENTER at a constant rate. When the fan's state changes, notice that multiple keystrokes are lost. The script will inform you when that happens (determined by the fact that the interval between keystrokes changes).
 
 ## Affected Hardware
 
