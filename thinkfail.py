@@ -6,30 +6,56 @@ import termios
 import time
 import tty
 
-def read_single_key():
-    """Read a single key from STDIN."""
-    # Save the current terminal settings
-    fd = sys.stdin.fileno()
-    old_settings = termios.tcgetattr(fd)
-    try:
-        # Set the terminal settings to raw mode
-        tty.setraw(fd)
-        # Read a single key from STDIN
-        key = sys.stdin.read(1)
-        if key == '\x03':
-            raise KeyboardInterrupt
-    finally:
-        # Restore the original terminal settings
-        termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
-    return key
+class _Getch:
+    """Gets a single character from standard input.  Does not echo to the
+screen."""
+    def __init__(self):
+        try:
+            self.impl = _GetchWindows()
+        except ImportError:
+            self.impl = _GetchUnix()
+
+    def __call__(self): return self.impl()
+
+
+class _GetchUnix:
+    def __init__(self):
+        import tty, sys
+
+    def __call__(self):
+        import sys, tty, termios
+        fd = sys.stdin.fileno()
+        old_settings = termios.tcgetattr(fd)
+        try:
+            tty.setraw(sys.stdin.fileno())
+            ch = sys.stdin.read(1)
+        finally:
+            termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
+        return ch
+
+
+class _GetchWindows:
+    def __init__(self):
+        import msvcrt
+
+    def __call__(self):
+        import msvcrt
+        return msvcrt.getch()
+
+
+getch = _Getch()
+
+print("Hit the ENTER key (or another key of your choice) until eventually a missed keystroke is detected. Aim for at least four keystrokes per second.\n\nHit Ctrl+C to abort.")
 
 last_time = None
 while True:
     # read a single character from STDIN
-    key = read_single_key()
+    key = getch()
     sys.stdout.write('\x1b[2K')  # erase the previous line
     sys.stdout.write('\x1b[1G')  # move the cursor to the beginning of the line
     sys.stdout.flush()
+    if key == '\x03':
+        raise KeyboardInterrupt
     # get the current time
     current_time = time.time()
     # calculate the time difference between the last keypress and the current keypress
