@@ -1,10 +1,7 @@
-#!python3
+#!env python3
 
 import datetime
-import sys
-import termios
 import time
-import tty
 
 class _Getch:
     """Gets a single character from standard input.  Does not echo to the
@@ -49,16 +46,11 @@ print("Hit the ENTER key (or another key of your choice) until eventually a miss
 
 last_time = None
 while True:
-    # read a single character from STDIN
     key = getch()
-    sys.stdout.write('\x1b[2K')  # erase the previous line
-    sys.stdout.write('\x1b[1G')  # move the cursor to the beginning of the line
-    sys.stdout.flush()
     if key == '\x03':
         raise KeyboardInterrupt
-    # get the current time
+
     current_time = time.time()
-    # calculate the time difference between the last keypress and the current keypress
     if last_time is not None:
         time_diff = current_time - last_time
         if time_diff > 0.3:
