@@ -20,9 +20,9 @@ Hit Ctrl+C to abort.
 
 ## Prerequisites
 
-Running `thinkfail.py` requires Python 3 to be installed. Running it from a Kubuntu 22.04 Live USB image works just fine and can reliably reproduce the issue with my hardware.
+Running `thinkfail.py` requires Python 3 to be installed. Running it from a [Kubuntu 22.04 Live USB image](https://cdimage.ubuntu.com/kubuntu/releases/22.04.2/release/kubuntu-22.04.2-desktop-amd64.iso) works just fine and can reliably reproduce the issue with my hardware.
 
-Connecting a power adapter and producing some slight CPU load (just let one or two videostreams run in the background in Firefox) seems to be helpful to increase the probability of the issue happening.
+Connecting a power adapter and producing some slight CPU load (just let one or two video streams run in the background in Firefox) seems to be helpful to increase the probability of the issue happening.
 
 ## Affected Hardware
 
