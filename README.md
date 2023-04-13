@@ -26,4 +26,4 @@ Connecting a power adapter and producing some slight CPU load (just let one or t
 
 ## Affected Hardware
 
-The affected hardware I know about is using an Intel iGPU and a Chicony keyboard.
+The affected hardware seem to be X1E4 and P1G5 with an Intel iGPU and a Chicony keyboard. Chances are high that the issue also applies to P1G4 and X1E5.
